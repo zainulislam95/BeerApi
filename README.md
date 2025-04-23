@@ -18,7 +18,7 @@ The Beer API is a simple web API built using ASP.NET Core. It provides endpoints
 ### 1. Clone the Repository
 Clone this repository to your local machine:
 ```bash
-git clone <repository-url>
+git clone https://github.com/zainulislam95/BeerApi.git
 ```
 
 ### 2. Navigate to the Project Directory
