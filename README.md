@@ -44,7 +44,7 @@ Alternatively, you can use the provided VS Code task:
 
 ### 5. Access the API
 Once the project is running, you can access the API at:
-- Swagger UI: [https://localhost:5001/swagger](https://localhost:5001/swagger) (or the port specified in your launch settings).
+- Swagger UI: [https://localhost:7000/swagger](https://localhost:7000/swagger) (or the port specified in your launch settings).
 
 ## Configuration
 The project uses a hardcoded URL for the beer data source. You can find and update this URL in the `ProductService` class if needed.

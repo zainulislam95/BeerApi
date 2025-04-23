@@ -31,3 +31,4 @@ D:\Task\BeerApi\obj\Debug\net8.0\refint\BeerApi.dll
 D:\Task\BeerApi\obj\Debug\net8.0\BeerApi.pdb
 D:\Task\BeerApi\obj\Debug\net8.0\BeerApi.genruntimeconfig.cache
 D:\Task\BeerApi\obj\Debug\net8.0\ref\BeerApi.dll
+D:\Task\BeerApi\obj\Debug\net8.0\BeerApi.sourcelink.json
