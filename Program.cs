@@ -1,9 +1,13 @@
+using BeerApi.Services;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+// HttpClient and application services
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 // Register Swagger services
 builder.Services.AddEndpointsApiExplorer();
@@ -30,6 +34,8 @@ if (app.Environment.IsDevelopment())
         return Task.CompletedTask;
     });
 }
+
+
 
 app.UseHttpsRedirection();
 

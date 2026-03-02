@@ -1,8 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.5.2.0
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11520.95 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerApi", "BeerApi.csproj", "{4AB8CE12-7270-3717-578F-DC544882D5C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerApi.Tests", "..\BeerApi.Tests\BeerApi.Tests.csproj", "{3D610890-8C03-4535-BFD3-1884329803DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +16,10 @@ Global
 		{4AB8CE12-7270-3717-578F-DC544882D5C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AB8CE12-7270-3717-578F-DC544882D5C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AB8CE12-7270-3717-578F-DC544882D5C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D610890-8C03-4535-BFD3-1884329803DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D610890-8C03-4535-BFD3-1884329803DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D610890-8C03-4535-BFD3-1884329803DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D610890-8C03-4535-BFD3-1884329803DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

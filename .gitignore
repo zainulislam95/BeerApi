@@ -28,3 +28,4 @@ obj/
 /obj/Debug/net8.0/staticwebassets.build.json
 /obj/project.assets.json
 /obj/project.nuget.cache
+/obj/Debug/net8.0/BeerApi.csproj.AssemblyReference.cache

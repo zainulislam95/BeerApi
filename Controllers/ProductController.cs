@@ -1,6 +1,8 @@
 using BeerApi.Models;
 using BeerApi.Services;
-using Microsoft.AspNetCore.Mvc; 
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace BeerApi.Controllers
 {
@@ -8,18 +10,34 @@ namespace BeerApi.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController()
+        public ProductController(IProductService productService, ILogger<ProductController> logger)
         {
-            _productService = new ProductService();
+            _productService = productService;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] string? filter, [FromQuery] string? sortBy)
         {
-            var products = await _productService.GetProductsAsync(filter, sortBy);
-            return Ok(products);
+            _logger.LogInformation("GetProducts called (filter={Filter}, sortBy={SortBy})", filter, sortBy);
+            try
+            {
+                var products = await _productService.GetProductsAsync(filter, sortBy);
+                return Ok(products);
+            }
+            catch (ServiceException ex)
+            {
+                _logger.LogError(ex, "Service error while getting products");
+                return Problem(detail: ex.Message, statusCode: StatusCodes.Status502BadGateway, title: "Upstream service error");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unexpected error while getting products");
+                return Problem(detail: "An unexpected error occurred.", statusCode: StatusCodes.Status500InternalServerError, title: "Internal server error");
+            }
         }
     }
 }
