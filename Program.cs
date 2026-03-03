@@ -1,4 +1,6 @@
 using BeerApi.Services;
+using BeerApi.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,14 @@ builder.Services.AddControllers();
 // HttpClient and application services
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IArticleService, ArticleService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+// Register EF Core DbContext using connection string from configuration
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseSqlServer(conn);
+});
 
 // Register Swagger services
 builder.Services.AddEndpointsApiExplorer();

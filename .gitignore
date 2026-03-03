@@ -29,3 +29,7 @@ obj/
 /obj/project.assets.json
 /obj/project.nuget.cache
 /obj/Debug/net8.0/BeerApi.csproj.AssemblyReference.cache
+/bin/Debug/net8.0/BeerApi.runtimeconfig.json
+/obj/Debug/net8.0/BeerApi.genruntimeconfig.cache
+/obj/BeerApi.csproj.nuget.g.targets
+/bin/Debug/net8.0/appsettings.json
