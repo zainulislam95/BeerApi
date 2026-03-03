@@ -1,3 +1,4 @@
+using AutoMapper;
 using BeerApi.Data;
 using BeerApi.Models;
 using BeerApi.Models.Entities;
@@ -9,19 +10,21 @@ namespace BeerApi.Services
     {
         private readonly ApplicationDbContext _db;
         private readonly ILogger<CustomerService> _logger;
+        private readonly IMapper _mapper;
 
-        public CustomerService(ApplicationDbContext db, ILogger<CustomerService> logger)
+        public CustomerService(ApplicationDbContext db, ILogger<CustomerService> logger, IMapper mapper)
         {
             _db = db;
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public async Task<List<Customer>> GetAllAsync()
+        public async Task<List<BeerApi.Dtos.CustomerDto>> GetAllAsync()
         {
             try
             {
                 var entities = await _db.Customers.AsNoTracking().OrderBy(c => c.Id).ToListAsync();
-                return entities.Select(e => ToDto(e)).ToList();
+                return _mapper.Map<List<BeerApi.Dtos.CustomerDto>>(entities);
             }
             catch (Exception ex)
             {
@@ -30,38 +33,14 @@ namespace BeerApi.Services
             }
         }
 
-        private static Customer ToDto(CustomerEntity e)
-        {
-            return new Customer
-            {
-                Id = e.Id,
-                FirstName = e.FirstName,
-                LastName = e.LastName,
-                Email = e.Email,
-                Phone = e.Phone,
-                CreatedAt = e.CreatedAt
-            };
-        }
+        
 
-        private static CustomerEntity ToEntity(Customer dto)
-        {
-            return new CustomerEntity
-            {
-                Id = dto.Id,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                Email = dto.Email,
-                Phone = dto.Phone,
-                CreatedAt = dto.CreatedAt == default ? DateTime.UtcNow : dto.CreatedAt
-            };
-        }
-
-        public async Task<Customer?> GetByIdAsync(int id)
+        public async Task<BeerApi.Dtos.CustomerDto?> GetByIdAsync(int id)
         {
             try
             {
                 var ent = await _db.Customers.FindAsync(id);
-                return ent == null ? null : ToDto(ent);
+                return ent == null ? null : _mapper.Map<BeerApi.Dtos.CustomerDto>(ent);
             }
             catch (Exception ex)
             {
@@ -70,15 +49,15 @@ namespace BeerApi.Services
             }
         }
 
-        public async Task<Customer> CreateAsync(Customer customer)
+        public async Task<BeerApi.Dtos.CustomerDto> CreateAsync(BeerApi.Dtos.CustomerCreateDto customer)
         {
             try
             { 
-                if (customer.CreatedAt == default) customer.CreatedAt = DateTime.UtcNow;
-                var entity = ToEntity(customer);
+                var entity = _mapper.Map<CustomerEntity>(customer);
+                if (entity.CreatedAt == default) entity.CreatedAt = DateTime.UtcNow;
                 _db.Customers.Add(entity);
                 await _db.SaveChangesAsync();
-                return ToDto(entity);
+                return _mapper.Map<BeerApi.Dtos.CustomerDto>(entity);
             }
             catch (Exception ex)
             {
@@ -87,17 +66,15 @@ namespace BeerApi.Services
             }
         }
 
-        public async Task<bool> UpdateAsync(int id, Customer customer)
+        public async Task<bool> UpdateAsync(int id, BeerApi.Dtos.CustomerUpdateDto customer)
         {
             try
             {
                 var existing = await _db.Customers.FindAsync(id);
                 if (existing == null) return false;
 
-                existing.FirstName = customer.FirstName;
-                existing.LastName = customer.LastName;
-                existing.Email = customer.Email;
-                existing.Phone = customer.Phone;
+                // map updated fields onto existing entity
+                _mapper.Map(customer, existing);
 
                 _db.Customers.Update(existing);
                 await _db.SaveChangesAsync();

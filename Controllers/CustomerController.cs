@@ -1,4 +1,4 @@
-using BeerApi.Models;
+using BeerApi.Dtos;
 using BeerApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,7 +20,7 @@ namespace BeerApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetAll()
+        public async Task<ActionResult<IEnumerable<BeerApi.Dtos.CustomerDto>>> GetAll()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace BeerApi.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Customer>> GetById(int id)
+        public async Task<ActionResult<BeerApi.Dtos.CustomerDto>> GetById(int id)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace BeerApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Customer>> Create([FromBody] Customer customer)
+        public async Task<ActionResult<CustomerDto>> Create([FromBody] CustomerCreateDto customer)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -83,7 +83,7 @@ namespace BeerApi.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Customer customer)
+        public async Task<IActionResult> Update(int id, [FromBody] BeerApi.Dtos.CustomerUpdateDto customer)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             try

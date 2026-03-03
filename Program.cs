@@ -1,6 +1,7 @@
 using BeerApi.Services;
 using BeerApi.Data;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     var conn = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseSqlServer(conn);
 });
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Register Swagger services
 builder.Services.AddEndpointsApiExplorer();
