@@ -1,4 +1,5 @@
 using BeerApi.Models;
+using BeerApi.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BeerApi.Data
@@ -11,7 +12,7 @@ namespace BeerApi.Data
 
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemArticle> ItemArticles { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerEntity> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,7 +45,7 @@ namespace BeerApi.Data
                 entity.Property(a => a.PricePerUnit).HasColumnType("decimal(18,2)");
             });
 
-            modelBuilder.Entity<Customer>(entity =>
+            modelBuilder.Entity<CustomerEntity>(entity =>
             {
                 entity.HasKey(c => c.Id);
                 entity.Property(c => c.Id).ValueGeneratedOnAdd();

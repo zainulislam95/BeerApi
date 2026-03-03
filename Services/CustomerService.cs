@@ -1,5 +1,6 @@
 using BeerApi.Data;
 using BeerApi.Models;
+using BeerApi.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BeerApi.Services
@@ -19,7 +20,8 @@ namespace BeerApi.Services
         {
             try
             {
-                return await _db.Customers.AsNoTracking().OrderBy(c => c.Id).ToListAsync();
+                var entities = await _db.Customers.AsNoTracking().OrderBy(c => c.Id).ToListAsync();
+                return entities.Select(e => ToDto(e)).ToList();
             }
             catch (Exception ex)
             {
@@ -28,11 +30,38 @@ namespace BeerApi.Services
             }
         }
 
+        private static Customer ToDto(CustomerEntity e)
+        {
+            return new Customer
+            {
+                Id = e.Id,
+                FirstName = e.FirstName,
+                LastName = e.LastName,
+                Email = e.Email,
+                Phone = e.Phone,
+                CreatedAt = e.CreatedAt
+            };
+        }
+
+        private static CustomerEntity ToEntity(Customer dto)
+        {
+            return new CustomerEntity
+            {
+                Id = dto.Id,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Email = dto.Email,
+                Phone = dto.Phone,
+                CreatedAt = dto.CreatedAt == default ? DateTime.UtcNow : dto.CreatedAt
+            };
+        }
+
         public async Task<Customer?> GetByIdAsync(int id)
         {
             try
             {
-                return await _db.Customers.FindAsync(id);
+                var ent = await _db.Customers.FindAsync(id);
+                return ent == null ? null : ToDto(ent);
             }
             catch (Exception ex)
             {
@@ -46,9 +75,10 @@ namespace BeerApi.Services
             try
             { 
                 if (customer.CreatedAt == default) customer.CreatedAt = DateTime.UtcNow;
-                _db.Customers.Add(customer);
+                var entity = ToEntity(customer);
+                _db.Customers.Add(entity);
                 await _db.SaveChangesAsync();
-                return customer;
+                return ToDto(entity);
             }
             catch (Exception ex)
             {
