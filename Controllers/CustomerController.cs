@@ -61,7 +61,7 @@ namespace BeerApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CustomerDto>> Create([FromBody] CustomerCreateDto customer)
+        public async Task<ActionResult<CustomerDto>> Create([FromBody] CustomerDto customer)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -83,7 +83,7 @@ namespace BeerApi.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, [FromBody] BeerApi.Dtos.CustomerUpdateDto customer)
+        public async Task<IActionResult> Update(int id, [FromBody] BeerApi.Dtos.CustomerDto customer)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             try

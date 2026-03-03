@@ -6,8 +6,8 @@ namespace BeerApi.Services
     {
         Task<List<CustomerDto>> GetAllAsync();
         Task<CustomerDto?> GetByIdAsync(int id);
-        Task<CustomerDto> CreateAsync(CustomerCreateDto customer);
-        Task<bool> UpdateAsync(int id, CustomerUpdateDto customer);
+        Task<CustomerDto> CreateAsync(CustomerDto customer);
+        Task<bool> UpdateAsync(int id, CustomerDto customer);
         Task<bool> DeleteAsync(int id);
     }
 }

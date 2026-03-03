@@ -9,8 +9,10 @@ namespace BeerApi.Mapping
         public MappingProfile()
         {
             CreateMap<CustomerEntity, BeerApi.Dtos.CustomerDto>().ReverseMap();
-            CreateMap<BeerApi.Dtos.CustomerCreateDto, CustomerEntity>();
-            CreateMap<BeerApi.Dtos.CustomerUpdateDto, CustomerEntity>();
+            // Map from DTO to entity but ignore identity and CreatedAt to avoid modifying keys on update
+            CreateMap<BeerApi.Dtos.CustomerDto, CustomerEntity>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
             // If needed map other entities/DTOs here
         }
     }

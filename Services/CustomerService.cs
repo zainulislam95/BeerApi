@@ -1,6 +1,5 @@
 using AutoMapper;
 using BeerApi.Data;
-using BeerApi.Models;
 using BeerApi.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,7 +32,7 @@ namespace BeerApi.Services
             }
         }
 
-        
+
 
         public async Task<BeerApi.Dtos.CustomerDto?> GetByIdAsync(int id)
         {
@@ -49,10 +48,10 @@ namespace BeerApi.Services
             }
         }
 
-        public async Task<BeerApi.Dtos.CustomerDto> CreateAsync(BeerApi.Dtos.CustomerCreateDto customer)
+        public async Task<BeerApi.Dtos.CustomerDto> CreateAsync(BeerApi.Dtos.CustomerDto customer)
         {
             try
-            { 
+            {
                 var entity = _mapper.Map<CustomerEntity>(customer);
                 if (entity.CreatedAt == default) entity.CreatedAt = DateTime.UtcNow;
                 _db.Customers.Add(entity);
@@ -66,7 +65,7 @@ namespace BeerApi.Services
             }
         }
 
-        public async Task<bool> UpdateAsync(int id, BeerApi.Dtos.CustomerUpdateDto customer)
+        public async Task<bool> UpdateAsync(int id, BeerApi.Dtos.CustomerDto customer)
         {
             try
             {
